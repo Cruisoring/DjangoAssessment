@@ -1,0 +1,71 @@
+{% extends "website/layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome to Dodgy Brother Car Market</h1>
+    <span class="message">
+        This is the demo application for the Python Developer Test
+    </span>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}          
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+            {{ page_obj.number }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+
+    <h2>Cars available</h2>
+    {% if car_list %}
+
+        {% comment %} <form method="get" action="{% url 'select' %}">
+            <p>Make: <input type="text" value={{make}} name="make"/></p>
+            <p>Year: <input type="text" value={{year}} name="year"/></p>
+            <p>order_by: <input type="text" value={{orderby}} name="orderby"/></p>
+            <p><input type="submit" name="submit" value="submit"/></p>
+        </form> {% endcomment %}
+
+        <table class="car_list">
+            <thead>
+            <tr>
+                {% comment %} <th>ID<th> {% endcomment %}
+                <th>Make</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Condition</th>
+                <th>Price</th>
+                <th>Seller</th>
+                <th>Mobile</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for car in car_list %}
+                <tr>
+                    {% comment %} <td>{{ car.id }}</td> {% endcomment %}
+                    <td>{{ car.Make }}</td>
+                    <td>{{ car.Model }}</td>
+                    <td>{{ car.Year }}</td>
+                    <td>{{ car.Condition }}</td>
+                    <td>${{ car.AskingPrice }}</td>
+                    <td>{{ car.SellerName }}</td>
+                    <td>{{ car.SellerMobile }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No cars listed.</p>
+        <p><a class="button" href="{% url 'list' %}">List car</a></p>
+    {% endif %}
+{% endblock %}
