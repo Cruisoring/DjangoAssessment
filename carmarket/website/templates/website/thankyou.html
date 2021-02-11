@@ -1,0 +1,23 @@
+{% extends "website/layout.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+    <h1>Thank you for listing your car</h1>
+    <p>
+        The listing id is {{id}}
+    </p>
+
+    <h2>Cars</h2>
+<!--    <input type="button" onclick="location.href='list.html';" value="List Car" />-->
+<!--    <ul>-->
+<!--        {% for car in cars %}-->
+<!--            <li>-->
+<!--                <a href="{% url 'detail' car.id %}">-->
+<!--                    {{ car.title }}-->
+<!--                </a>-->
+<!--            </li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+    <a href="{% url 'list' %}">Car list</a>
+{% endblock %}

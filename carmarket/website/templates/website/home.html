@@ -1,0 +1,41 @@
+{% extends "website/layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome to Dodgy Brother Car Market</h1>
+    <span class="message">
+        This is the demo application for the Python Developer Test
+    </span>
+
+    <h2>Cars available</h2>
+    {% if car_list %}
+        <table class="car_list">
+            <thead>
+            <tr>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Condition</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for car in car_list %}
+                <tr>
+                    <td>{{ car.Make }}</td>
+                    <td>{{ car.Model }}</td>
+                    <td>{{ car.Year }}</td>
+                    <td>{{ car.Condition }}</td>
+                    <td>{{ car.AskingPrice }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No cars listed. Use the <a class="button" href="{% url 'list' %}">List car</a>.</p>
+    {% endif %}
+
+{% endblock %}
