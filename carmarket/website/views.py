@@ -6,26 +6,58 @@ from cars.models import Car
 
 CARS_PER_PAGE = 10
 
-def home(request, page_no=1):
-    all_entries = Car.objects.all()
-    # cars = sorted(all, key='id', reverse=True)
-
-    paginator = Paginator(all_entries, CARS_PER_PAGE)
-    print(paginator.count)
-    print(paginator.page_range)
-    
-    cars_page = tuple([car for car in paginator.page(page_no).object_list])
-    # cars_of_page = current_page.object_list
-
-    return render(request, 'website/home.html', {cars_page: cars_page})
+def home(request, page_no=0):
+    start = page_no*10
+    return HomeListView.as_view(
+        queryset=Car.objects.order_by("-id")[start:start+10],  # :10 limits the results to the then most recent
+        context_object_name="car_list",
+        template_name="website/home.html",
+    )
 
 class HomeListView(ListView):
     """Renders the home page, with maximum 10 cars."""
     model = Car
+    template_name = "website/home.html"
+    context_object_name="car_list"
+    paginate_by = 10 
 
     def get_context_data(self, **kwargs):
         context = super(HomeListView, self).get_context_data(**kwargs)
+        context['make'] = self.request.GET.get('make', 'Toyota')
+        context['orderby'] = self.request.GET.get('orderby', '-Year')
         return context
+
+    # def get_queryset(self, **kwargs):
+    #     make = self.request.GET.get('make', 'None')
+    #     year = self.request.GET.get('year', 'None')
+    #     order = self.request.GET.get('orderby', '-Year')
+    #     q = Car.objects if make == 'None' else Car.objects.filter(Make=make,)
+    #     q = q if make == 'None' else q.filter(Year = year,)
+    #     q = q.order_by(order)
+    #     return q
+
+
+class SelectView(ListView):
+    """Renders the home page, with maximum 10 cars."""
+    model = Car
+    template_name = "website/home.html"
+    context_object_name="car_list"
+    paginate_by = 10 
+
+    def get_context_data(self, **kwargs):
+        context = super(SelectView, self).get_context_data(**kwargs)
+        context['make'] = self.request.GET.get('make', 'Toyota')
+        context['orderby'] = self.request.GET.get('orderby', '-Year')
+        return context
+
+    def get_queryset(self, **kwargs):
+        make = self.request.GET.get('make', 'None')
+        year = self.request.GET.get('year', 'None')
+        order = self.request.GET.get('orderby', '-Year')
+        q = Car.objects if make == 'None' else Car.objects.filter(Make=make,)
+        q = q if make == 'None' else q.filter(Year = year,)
+        q = q.order_by(order)
+        return q
 
 def about(request):
     return render(request, "website/about.html")

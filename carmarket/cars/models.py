@@ -5,11 +5,11 @@ from django.db import models
 
 
 class Make(models.TextChoices):
-    Ford = 'FO', 'Ford'
-    Holden = 'HO', 'Holden'
-    Mazda = 'MA', 'Mazda'
-    Toyota = 'TO', 'Toyota'
-    Nissan = 'NI', 'Nissan'
+    Ford = 'FORD', 'Ford'
+    Holden = 'HOLDEN', 'Holden'
+    Mazda = 'MAZDA', 'Mazda'
+    Toyota = 'TOYOTA', 'Toyota'
+    Nissan = 'NISSAN', 'Nissan'
 
 
 class Model(models.TextChoices):

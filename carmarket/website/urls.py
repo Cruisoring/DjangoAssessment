@@ -17,21 +17,29 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from website.views import home, thankyou, contact, about, HomeListView
+from website.views import home, thankyou, contact, about, HomeListView, SelectView
 from cars.models import Car
 
-home_list_view = HomeListView.as_view(
-    queryset=Car.objects.order_by("-id")[:10],  # :10 limits the results to the then most recent
-    context_object_name="car_list",
-    template_name="website/home.html",
-)
+def get_home_list(page_no=0):
+    start = page_no*10
+    return HomeListView.as_view(
+        queryset=Car.objects.order_by("-id")[start:start+10],  # :10 limits the results to the then most recent
+        # context_object_name="car_list",
+        # template_name="website/home.html",
+    )
+
+def select_list():
+    return SelectView.as_view(
+        queryset=Car.objects.order_by("-id")[0:10],  # :10 limits the results to the then most recent
+    )
 
 urlpatterns = [
-    path('', home_list_view, name='home'),
-    # path(r'^(?P<page_no>\w+)/$', home),
+    path('', get_home_list(), name='home'),
+    # path('page/<page_no>', HomeListView.as_view()),
     path('thankyou/<int:id>', thankyou, name='thankyou'),
     path('contact', contact, name='contact'),
     path('about', about, name='about'),
+    path('select?filter=<filter_val>&orderby=<order_val>', select_list(), name='select'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

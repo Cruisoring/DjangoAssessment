@@ -37,7 +37,8 @@
 }
 
 a.button {
-  background-color: lightblue;
+  background-color: navy;
+  margin: 2;
   color: white;
   text-decoration: none;
   text-transform: uppercase;
