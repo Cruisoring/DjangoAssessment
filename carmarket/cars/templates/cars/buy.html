@@ -1,0 +1,14 @@
+{% extends "website/layout.html" %}
+
+{% block title %}List Car{% endblock %}
+
+{% block content %}
+<h1>List Car</h1>
+<form method="POST" class="log-form">
+    <table>
+        {{ form }}
+    </table>
+    {% csrf_token %}
+    <button type="submit" class="save btn btn-default">Submit</button>
+</form>
+{% endblock %}
