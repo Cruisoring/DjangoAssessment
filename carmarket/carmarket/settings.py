@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'website',
     'cars',
     'django_seed',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

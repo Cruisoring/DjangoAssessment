@@ -17,29 +17,22 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from website.views import home, thankyou, contact, about, HomeListView, SelectView
+from website.views import thankyou, contact, about, login, logout, home, congratulate, confirm
 from cars.models import Car
 
-def get_home_list(page_no=0):
-    start = page_no*10
-    return HomeListView.as_view(
-        queryset=Car.objects.order_by("-id")[start:start+10],  # :10 limits the results to the then most recent
-        # context_object_name="car_list",
-        # template_name="website/home.html",
-    )
-
-def select_list():
-    return SelectView.as_view(
-        queryset=Car.objects.order_by("-id")[0:10],  # :10 limits the results to the then most recent
-    )
 
 urlpatterns = [
-    path('', get_home_list(), name='home'),
+    path('', home, name='home'),
+    path('([?|&]\S+=\S+|)*', home),
     # path('page/<page_no>', HomeListView.as_view()),
     path('thankyou/<int:id>', thankyou, name='thankyou'),
+    path('congratulate/<int:id>', congratulate, name='congratulate'),
+    path('confirm/<int:id>', confirm, name='confirm'),
     path('contact', contact, name='contact'),
     path('about', about, name='about'),
-    path('select?filter=<filter_val>&orderby=<order_val>', select_list(), name='select'),
+    path('login', login, name='login'),
+    path('logout', logout, name='logout'),
+    # path('select?filter=<filter_val>&orderby=<order_val>', select_list(), name='select'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

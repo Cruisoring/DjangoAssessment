@@ -8,6 +8,7 @@ django = "*"
 django-seed = "*"
 faker = "*"
 factory-boy = "*"
+django-filter = "*"
 
 [dev-packages]
 pytest = "*"

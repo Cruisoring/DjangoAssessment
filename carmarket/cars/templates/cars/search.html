@@ -1,0 +1,42 @@
+{% extends "website/layout.html" %}
+
+{% block title %}
+    Search Cars
+{% endblock %}
+
+{% block content %}
+    <form action="" method="get">
+        {{filter.form.as_p}}
+        <input type="submit" />
+    </form>
+
+    <table class="car_list">
+        <thead>
+        <tr>
+            {% comment %} <th>ID<th> {% endcomment %}
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Condition</th>
+            <th>Price</th>
+            <th>Seller</th>
+            <th>Mobile</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for car in filter.qs %}
+            <tr>
+                {% comment %} <td>{{ car.id }}</td> {% endcomment %}
+                <td>{{ car.Make }}</td>
+                <td>{{ car.Model }}</td>
+                <td>{{ car.Year }}</td>
+                <td>{{ car.Condition }}</td>
+                <td>${{ car.AskingPrice }}</td>
+                <td>{{ car.SellerName }}</td>
+                <td>{{ car.SellerMobile }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

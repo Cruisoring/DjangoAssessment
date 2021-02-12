@@ -11,6 +11,10 @@
     padding: 8px 5px 8px 5px;
 }
 
+.navbar-right {
+    float: right;
+}
+
 .navbar a {
     text-decoration: none;
     color: inherit;
@@ -37,9 +41,25 @@
 }
 
 a.button {
-  background-color: navy;
-  margin: 2;
-  color: white;
-  text-decoration: none;
-  text-transform: uppercase;
+    background-color: navy;
+    margin: 2;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+span.current {
+    font-size: 1em;
+    font-style: bold;
+    color: navy;
+}
+
+span.sold {
+    font-size: 1em;
+    font-style: bold;
+    background: lightslategray;
+}
+
+a.page_num {
+    color: brown;
 }

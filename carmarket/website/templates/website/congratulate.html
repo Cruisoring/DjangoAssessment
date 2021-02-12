@@ -1,0 +1,36 @@
+{% extends "website/layout.html" %}
+
+{% block title %}Congratulation!{% endblock %}
+
+{% block content %}
+    <h1>Thank you for buying the car</h1>
+    <p>
+        Iron Mike would be in touch with you shortly. 
+    </p>
+    <p>
+        Here is the information to be send to Iron:
+    </p>
+
+    <div>
+        <span>
+            <label>Detail of the Vehicle:</label>
+            <div>{{ car }}</div>
+        </span>
+        <span>
+            <label>Detail of the Seller:</label>
+            <div>{{ car.SellerMobile }}</div>
+        </span>
+        <span>
+            <label>The Sale Price:</label>
+            <div>${{ car.AskingPrice}}</div>
+        </span>
+        <span>
+            <label>Name of the interested party:</label>
+            <div>{{ car.BuyerName }}</div>
+        </span>
+        <span>
+            <label>Mobile of the interested party:</label>
+            <div>{{ car.BuyerMobile }}</div>
+        </span>
+    </div>
+{% endblock %}

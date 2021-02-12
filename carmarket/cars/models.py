@@ -29,6 +29,12 @@ class Condition(models.TextChoices):
     Excellent = 'Excellent'
 
 
+class Status(models.TextChoices):
+    Available = 'Available'
+    OnHold = 'OnHold'
+    Sold = 'Sold'
+
+
 class Car(models.Model):
     SellerName = models.CharField(max_length=100)
     SellerMobile = models.CharField(max_length=15)
@@ -37,10 +43,22 @@ class Car(models.Model):
     Year = models.IntegerField(choices=Years, default=Years[2])
     Condition = models.CharField(max_length=10, choices=Condition.choices, default=Condition.Fair)
     AskingPrice = models.IntegerField(default=1000)
-
+    Status = models.CharField(max_length=10, choices=Status.choices, default=Status.Available)
+    BuyerName = models.CharField(max_length=100, default='')
+    BuyerMobile = models.CharField(max_length=15, default='')
 
     def __str__(self):
         return f'{self.Make} {self.Model}: {self.Year}, {self.Condition}'
 
     class Meta:
         ordering = ["id",]
+
+
+class Confirmation(Car):
+    Commission = models.CharField(max_length=500, default='')
+
+
+class Customer(models.Model):
+    username = models.CharField(max_length=30, default='mike@example.org')
+    email = models.EmailField()
+    password = models.CharField(max_length=32)

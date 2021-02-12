@@ -10,15 +10,13 @@
         This is the demo application for the Python Developer Test
     </span>
 
-    <h2>Cars available</h2>
-    {% if car_list %}
+    <form action="{% url 'home' %}" method="get">
+        {{filter.form.as_p}}
+        <input type="submit" />
+    </form>
 
-        <form method="get" action="{% url 'select' %}">
-            <p>Make: <input type="text" value={{make}} name="make"/></p>
-            <p>Year: <input type="text" value={{year}} name="year"/></p>
-            <p>order_by: <input type="text" value={{orderby}} name="orderby"/></p>
-            <p><input type="submit" name="submit" value="submit"/></p>
-        </form>
+    <h2>Cars available</h2>
+    {% if page_obj.object_list %}
 
         <table class="car_list">
             <thead>
@@ -29,12 +27,14 @@
                 <th>Year</th>
                 <th>Condition</th>
                 <th>Price</th>
-                <th>Seller</th>
-                <th>Mobile</th>
+                {% comment %} <th>Seller</th>
+                <th>Mobile</th> {% endcomment %}
+                <th>Status</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            {% for car in car_list %}
+            {% for car in page_obj.object_list %}
                 <tr>
                     {% comment %} <td>{{ car.id }}</td> {% endcomment %}
                     <td>{{ car.Make }}</td>
@@ -42,14 +42,43 @@
                     <td>{{ car.Year }}</td>
                     <td>{{ car.Condition }}</td>
                     <td>${{ car.AskingPrice }}</td>
-                    <td>{{ car.SellerName }}</td>
-                    <td>{{ car.SellerMobile }}</td>
+                    {% comment %} <td>{{ car.SellerName }}</td>
+                    <td>{{ car.SellerMobile }}</td> {% endcomment %}
+                    <td>{{ car.Status }}</td>
+                    <td>
+                        {% if car.Status == 'Available' %}
+                            <a class="page_num" href="{% url 'buy' car.id %}">Buy</a>
+                        {% else %}
+                            <span class="sold">Sold</span>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <p>No cars listed. Use the <a class="button" href="{% url 'list' %}">List car</a>.</p>
+        <p>No cars listed.</p>
+        <p><a class="button" href="{% url 'list' %}">List car</a></p>
     {% endif %}
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?{{context}}&page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            {% for page_num in range %}
+                {% if page_obj.number == page_num %}
+                    <span class="current">{{page_num}}</span>
+                {% else %}
+                    <a class="page_num" href="?{{context}}&page={{page_num}}">{{page_num}}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?{{context}}&page={{ page_obj.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
 
 {% endblock %}

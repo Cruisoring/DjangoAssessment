@@ -9,10 +9,20 @@
 
 <body>
 <div class="navbar">
+    {% comment %} <a href="{% url 'home' %}" class="navbar-brand">Home</a> {% endcomment %}
     <a href="{% url 'home' %}" class="navbar-brand">Home</a>
-    <a href="{% url 'list' %}" class="navbar-item">List car</a> 
+    <a href="{% url 'search' %}" class="navbar-item">Search Cars</a>
+    <a href="{% url 'list' %}" class="navbar-item">List car</a>
     <a href="{% url 'about' %}" class="navbar-item">About</a>
     <a href="{% url 'contact' %}" class="navbar-item">Contact</a>
+
+    <ul class="nav navbar-nav navbar-right">
+     {% if request.session.user_id %}
+        <a class="nav-link text-black font-weight-bold" href="{% url 'logout' %}">Logout</a>
+     {% else %}
+        <a class="nav-link text-black font-weight-bold" href="{% url 'login' %}">Login</a>
+     {% endif %}
+    </ul>
 </div>
 
 <div class="body-content">
